@@ -15,6 +15,19 @@ const PORT = process.env.PORT || 5000;
 // ==========================
 // Database connection
 // ==========================
+console.log('--- Database Connection Debug ---');
+if (process.env.DATABASE_URL) {
+  console.log('Strategy: Using DATABASE_URL');
+  // Mask the URL to avoid leaking credentials in logs
+  console.log('URL:', process.env.DATABASE_URL.replace(/:([^:@]+)@/, ':****@'));
+} else {
+  console.log('Strategy: Using individual environment variables');
+  console.log('DB_NAME:', process.env.DB_NAME);
+  console.log('DB_USER:', process.env.DB_USER);
+  console.log('DB_HOST:', process.env.DB_HOST);
+  // Do not log password
+}
+console.log('---------------------------------');
 const sequelize = process.env.DATABASE_URL
   ? new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
